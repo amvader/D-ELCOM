@@ -24,15 +24,31 @@ import myconnect
 print("start")
 
 pycom.heartbeat(True)
-myconnect.wifi(pybytes)
+wlan=WLAN()
+if not wlan.isconnected():
+    myconnect.wifi(pybytes)
+
+py = Pycoproc()
 
 # Send data continuously to Pybytes
-while True:
-    for j in range(0,2):
-        for i in range(0,20):
-            pybytes.send_signal(1, math.sin(i/10*math.pi))
-            print('sent signal {}'.format(i) + ' & signal' + str(j) )
-            time.sleep(2)
+for i in range(0,20):
 
+    mp = MPL3115A2(py,mode=ALTITUDE)
+    mp1 = mp.altitude() * 3.281
+    mp2 = int(mp1 * (10**2))/(10**2)
+    mp3 = float(mp2)
+    battery_voltage = py.read_battery_voltage()
+    pybytes.send_signal(1, math.sin(i/10*math.pi))
+    pybytes.send_signal(2, mp3 )
+    pybytes.send_signal(3, battery_voltage )
+
+    print('sent signals')
+    mID=ubinascii.hexlify(machine.unique_id())
+
+    time.sleep(10)
+
+pycom.heartbeat(false)
+while True:
+    pycom.rgbled(0x550055)
 print ("done")
 print(pybytes.isconnected())

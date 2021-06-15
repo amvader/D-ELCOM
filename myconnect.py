@@ -1,6 +1,9 @@
 import os
 import machine
 import pycom
+from network import LTE
+import time
+import socket
 
 def wifi(pybytes):
     uart = machine.UART(0, 115200)
@@ -13,7 +16,6 @@ def wifi(pybytes):
         'Amvader2': {'pwd': '4053085956'},
         'NETGEAR25': {'pwd': 'littleshoe029'},
         'SWS': {'pwd': 'ok321321'}}
-
 
     if machine.reset_cause() != machine.SOFT_RESET:
         from network import WLAN
@@ -44,4 +46,29 @@ def wifi(pybytes):
             print("Failed to connect to any known network, going into AP mode")
             wlan.init(mode=WLAN.AP, ssid=original_ssid, auth=original_auth, channel=6, antenna=WLAN.INT_ANT)
 
+    pybytes.reconnect()
+
+
+def lte(pycom):
+    lte = LTE()
+    #lte.attach( band=13,apn="iot.truphone.com",cid=3,type=LTE.IPV4V6)
+    lte.attach( band=13,apn="iot.truphone.com")
+    print("attaching..",end='')
+    while not lte.isattached():
+        time.sleep(0.25)
+        print('.',end='')
+        print(lte.send_at_cmd('AT!="fsm"'))         # get the System FSM
+        print("band 13")
+    print("attached!")
+    print("now connect...")
+    lte.connect()
+    #print("connecting [##",end='')
+    while not lte.isconnected():
+        time.sleep(0.25)
+        #print('#',end='')
+        #print(lte.send_at_cmd('AT!="showphy"'))
+        print(lte.send_at_cmd('AT!="fsm"'))
+    #print("] connected!")
+    print("connected!")
+    #print(socket.getaddrinfo('pycom.io', 80))
     pybytes.reconnect()

@@ -1,5 +1,4 @@
 # main.py -- put your code here!
-print("start main...")
 # Import what is necessary to create a thread
 import time
 import math
@@ -12,6 +11,7 @@ import urequest
 import ubinascii
 from network import LTE
 from network import WLAN
+import sys
 
 #import urequest
 #import ubinascii
@@ -21,12 +21,18 @@ from network import WLAN
 import myconnect
 
 #START my code
-print("start")
+print("Main...")
 
 pycom.heartbeat(True)
-wlan=WLAN()
-if not wlan.isconnected():
-    myconnect.wifi(pybytes)
+#wlan=WLAN()
+#if not wlan.isconnected():
+#    myconnect.wifi(pybytes)
+
+lte=LTE()
+while not lte.isconnected():
+    myconnect.lte(pybytes)
+
+
 
 py = Pycoproc()
 
@@ -48,16 +54,17 @@ for i in range(0,20):
     dat={"deviceToken": "gpy-a1","altitude":mp3, "batteryV":battery_voltage, "type":connType }
     header={"content-type":"application/json"}
     link="https://amvader.net/iot/pycom/elcom-hook.php"
-    print("Sending HTTP Post Data")
     r = urequest.post(link,json=dat,headers=header)
-    print("Post Data Sent via HTTP")
+    print("Post Data Sent via HTTP " )
     print(r)
     r.close()
 
     time.sleep(10)
 
-pycom.heartbeat(false)
+pycom.heartbeat(False)
 while True:
-    pycom.rgbled(0x550055)
+    pycom.rgbled(0xFF6600) # orange
+    time.sleep(60)
+
 print ("done")
-print(pybytes.isconnected())
+sys.exit()

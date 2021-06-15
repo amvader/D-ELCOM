@@ -41,9 +41,18 @@ for i in range(0,20):
     pybytes.send_signal(1, math.sin(i/10*math.pi))
     pybytes.send_signal(2, mp3 )
     pybytes.send_signal(3, battery_voltage )
+    print('sent signals to pybytes')
 
-    print('sent signals')
+    connType="undefined"
     mID=ubinascii.hexlify(machine.unique_id())
+    dat={"deviceToken": "gpy-a1","altitude":mp3, "batteryV":battery_voltage, "type":connType }
+    header={"content-type":"application/json"}
+    link="https://amvader.net/iot/pycom/elcom-hook.php"
+    print("Sending HTTP Post Data")
+    r = urequest.post(link,json=dat,headers=header)
+    print("Post Data Sent via HTTP")
+    print(r)
+    r.close()
 
     time.sleep(10)
 

@@ -23,24 +23,26 @@ import myconnect
 print("ing Main...")
 
 #START my code
+
+pycom.nvs_set('pybytes_debug', 99)
+
+pycom.heartbeat(True)
+wlan=WLAN()
+if not wlan.isconnected():
+    myconnect.wifi(pybytes)
+
+lte=LTE()
+while not lte.isconnected():
+    myconnect.lte(pybytes)
+
+print("pycproc")
+py = Pycoproc()
+print("end pyco")
+
 while True:
 
-    pycom.heartbeat(True)
-    wlan=WLAN()
-    if not wlan.isconnected():
-        myconnect.wifi(pybytes)
-
-    lte=LTE()
-    while not lte.isconnected():
-        myconnect.lte(pybytes)
-
-
-    print("pycproc")
-    py = Pycoproc()
-    print("end pyco")
-
     # Send data continuously to Pybytes
-    for i in range(1,6):
+    for i in range(1,11):
 
         pycom.heartbeat(False)
         connType="na"
@@ -48,15 +50,15 @@ while True:
             print("conn=both ",end='')
             wlan.disconnect()
             connType="LTEwifi"
-            pycom.rgbled(0xFF0000)
+            pycom.rgbled(0x220000)
         elif lte.isconnected():
             print("conn=lte ",end='')
             connType="lte"
-            pycom.rgbled(0x00FF00)
+            pycom.rgbled(0x002200)
         elif wlan.isconnected():
             connType="wifi"
             print("conn=wifi ",end='')
-            pycom.rgbled(0x0000FF)
+            pycom.rgbled(0x000022)
         else:
             connType="none"
             pycom.heartbeat(True)
@@ -75,9 +77,13 @@ while True:
             pybytes.send_signal(2, mp3 )
             pybytes.send_signal(3, battery_voltage )
             print('sent signals to pybytes...')
+        else:
+            print(" pybytes not connected. ",end='')
+            #pybytes.reconnect()
 
 
-        print(" send ...", end='')
+
+        print(" send http...", end='')
         mID=ubinascii.hexlify(machine.unique_id())
         dat={"deviceToken": mID,"altitude":mp3, "batteryV":battery_voltage, "connType":connType, "event":i }
         header={"content-type":"application/json"}
@@ -86,13 +92,13 @@ while True:
         print("Post Data Sent via HTTP " , end='')
         print(r)
         r.close()
-        pycom.rgbled(0x000000)
-        time.sleep(15)
+        pycom.rgbled(0x000011)
+        time.sleep(7)
 
     pycom.heartbeat(False)
     pycom.rgbled(0xFF66B2) # orange
-    time.sleep(20)
+    time.sleep(15)
 
     pycom.rgbled(0x990000)
     print ("done")
-    time.sleep(20)
+    time.sleep(15)

@@ -76,9 +76,9 @@ while True:
             pybytes.send_signal(1, i)
             pybytes.send_signal(2, mp3 )
             pybytes.send_signal(3, battery_voltage )
-            print('sent signals to pybytes...')
+            print('+pybytes+...')
         else:
-            print(" pybytes not connected. ",end='')
+            print(" XpybytesX. ",end='')
             #pybytes.reconnect()
 
 

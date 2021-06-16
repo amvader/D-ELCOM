@@ -24,22 +24,24 @@ print("ing Main...")
 
 #START my code
 
-pycom.nvs_set('pybytes_debug', 99)
+#pycom.nvs_set('pybytes_debug', 99)
 
 pycom.heartbeat(True)
 wlan=WLAN()
-if not wlan.isconnected():
-    myconnect.wifi(pybytes)
-
 lte=LTE()
-if not lte.isconnected():
-    myconnect.lte(pybytes)
+
+time.sleep(7)
 
 print("pycproc")
 py = Pycoproc()
 print("end pyco")
 
 while True:
+    #recheck connection, maybe this is done on interupt?
+    if not wlan.isconnected():
+        myconnect.wifi(pybytes,wlan)
+    if not lte.isconnected() or not wlan.isconnected():
+        myconnect.lte(pybytes,lte)
 
     # Send data continuously to Pybytes
     for i in range(1,11):
@@ -48,12 +50,12 @@ while True:
         connType="na"
         if lte.isconnected() and wlan.isconnected():
             print("conn=both ",end='')
-            wlan.disconnect()
+            #wlan.disconnect()
             connType="LTEwifi"
             pycom.rgbled(0x220000)
         elif lte.isconnected():
             print("conn=lte ",end='')
-            connType="lte"
+            connType="LTE"
             pycom.rgbled(0x002200)
         elif wlan.isconnected():
             connType="wifi"
@@ -80,8 +82,6 @@ while True:
         else:
             print(" XpybytesX. ",end='')
             #pybytes.reconnect()
-
-
 
         print(" send http...", end='')
         mID=ubinascii.hexlify(machine.unique_id())

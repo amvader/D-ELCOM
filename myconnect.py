@@ -10,7 +10,7 @@ def wifi(pybytes):
     os.dupterm(uart)
 
     known_nets = {
-        'AMEL': {'pwd': 'b00b121374'},
+        'AMEL': {'pwd': 'xb00b121374'},
         'AmelSWS': {'pwd': 'nancy3stl4'},
         'Amvader1': {'pwd': '4053085956'},
         'Amvader2': {'pwd': '4053085956'},
@@ -41,26 +41,29 @@ def wifi(pybytes):
             while not wlan.isconnected():
                 machine.idle() # save power while waiting
             print("Connected to "+net_to_use+" with IP address: " + wlan.ifconfig()[0])
+            print("reconnect pybytes...")
+            pybytes.connect()
 
         except Exception as e:
-            print("Failed to connect to any known network, going into AP mode")
-            wlan.init(mode=WLAN.AP, ssid=original_ssid, auth=original_auth, channel=6, antenna=WLAN.INT_ANT)
+            print("Failed to connect to any known network!")
+            wlan.deinit()
+            #wlan.init(mode=WLAN.AP, ssid=original_ssid, auth=original_auth, channel=6, antenna=WLAN.INT_ANT)
 
-    pybytes.reconnect()
 
 
-def lte(pycom):
+def lte(pybytes):
     lte = LTE()
     #lte.attach( band=13,apn="iot.truphone.com",cid=3,type=LTE.IPV4V6)
-    lte.attach( band=13,apn="iot.truphone.com")
-    print("attaching..",end='')
+    #lte.attach( band=3, apn="iot.truphone.com")
+    lte.attach( apn="iot.truphone.com")
+    print("LTE: attaching..",end='')
     while not lte.isattached():
         time.sleep(0.25)
         print('.',end='')
         print(lte.send_at_cmd('AT!="fsm"'))         # get the System FSM
-        print("band 13")
+        #print("band 13")
     print("attached!")
-    print("now connect...")
+    print("LTE: connecting...",end='')
     lte.connect()
     #print("connecting [##",end='')
     while not lte.isconnected():
@@ -70,5 +73,7 @@ def lte(pycom):
         print(lte.send_at_cmd('AT!="fsm"'))
     #print("] connected!")
     print("connected!")
-    #print(socket.getaddrinfo('pycom.io', 80))
-    pybytes.reconnect()
+    #WLAN.deinit()
+    print(socket.getaddrinfo('pycom.io', 80))
+    print("reconnect pybytes...")
+    pybytes.connect_lte()

@@ -24,7 +24,7 @@ print("ing Main...")
 
 #START my code
 while True:
-    
+
     pycom.heartbeat(True)
     wlan=WLAN()
     if not wlan.isconnected():
@@ -40,7 +40,7 @@ while True:
     print("end pyco")
 
     # Send data continuously to Pybytes
-    for i in range(1,5):
+    for i in range(1,6):
 
         pycom.heartbeat(False)
         connType="na"
@@ -79,7 +79,7 @@ while True:
 
         print(" send ...", end='')
         mID=ubinascii.hexlify(machine.unique_id())
-        dat={"deviceToken": "gpy-a1","altitude":mp3, "batteryV":battery_voltage, "connType":connType, "event":i }
+        dat={"deviceToken": mID,"altitude":mp3, "batteryV":battery_voltage, "connType":connType, "event":i }
         header={"content-type":"application/json"}
         link="https://amvader.net/iot/pycom/elcom-hook.php"
         r = urequest.post(link,json=dat,headers=header)
@@ -87,12 +87,12 @@ while True:
         print(r)
         r.close()
         pycom.rgbled(0x000000)
-        time.sleep(10)
+        time.sleep(15)
 
     pycom.heartbeat(False)
     pycom.rgbled(0xFF66B2) # orange
-    time.sleep(60)
+    time.sleep(20)
 
     pycom.rgbled(0x990000)
     print ("done")
-    time.sleep(60)
+    time.sleep(20)

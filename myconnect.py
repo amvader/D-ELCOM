@@ -74,6 +74,6 @@ def lte(pybytes):
     #print("] connected!")
     print("connected!")
     #WLAN.deinit()
-    print(socket.getaddrinfo('pycom.io', 80))
+    #print(socket.getaddrinfo('pycom.io', 80))
     print("reconnect pybytes...")
     pybytes.connect_lte()

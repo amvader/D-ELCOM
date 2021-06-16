@@ -10,7 +10,7 @@ def wifi(pybytes):
     os.dupterm(uart)
 
     known_nets = {
-        'AMEL': {'pwd': 'xb00b121374'},
+        'AMEL': {'pwd': 'b00b121374'},
         'AmelSWS': {'pwd': 'nancy3stl4'},
         'Amvader1': {'pwd': '4053085956'},
         'Amvader2': {'pwd': '4053085956'},

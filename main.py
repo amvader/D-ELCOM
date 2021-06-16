@@ -32,7 +32,7 @@ if not wlan.isconnected():
     myconnect.wifi(pybytes)
 
 lte=LTE()
-while not lte.isconnected():
+if not lte.isconnected():
     myconnect.lte(pybytes)
 
 print("pycproc")

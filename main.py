@@ -39,7 +39,7 @@ py = Pycoproc()
 print("end pyco")
 
 # Send data continuously to Pybytes
-for i in range(0,20):
+for i in range(1,5):
 
     pycom.heartbeat(False)
     connType="na"
@@ -89,9 +89,10 @@ for i in range(0,20):
     time.sleep(10)
 
 pycom.heartbeat(False)
-while True:
-    pycom.rgbled(0xFF6600) # orange
-    time.sleep(60)
+pycom.rgbled(0xFF66B2) # orange
+time.sleep(60)
 
+pycom.rgbled(0x990000)
+time.sleep(60)
 print ("done")
 sys.exit()

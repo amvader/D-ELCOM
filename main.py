@@ -38,7 +38,7 @@ print("end pyco")
 
 while True:
     #recheck connection, maybe this is done on interupt?
-    if not wlan.isconnected():
+    if not wlan.isconnected() or not lte.isconnected():
         myconnect.wifi(pybytes,wlan)
     if not lte.isconnected() and not wlan.isconnected():
         myconnect.lte(pybytes,lte)

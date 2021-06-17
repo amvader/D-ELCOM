@@ -44,7 +44,7 @@ while True:
         myconnect.lte(pybytes,lte)
 
     # Send data continuously to Pybytes
-    for i in range(1,11):
+    for i in range(1,6):
 
         pycom.heartbeat(False)
         connType="na"
@@ -95,7 +95,7 @@ while True:
         print(r)
         r.close()
         pycom.rgbled(0x000011)
-        time.sleep(7)
+        time.sleep(5)
 
     pycom.heartbeat(False)
     pycom.rgbled(0xFF66B2) # orange

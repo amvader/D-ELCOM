@@ -52,7 +52,8 @@ def request(method, url, data=None, json=None, headers={}, stream=None):
 
     ai = usocket.getaddrinfo(host, port, 0, usocket.SOCK_STREAM)
     ai = ai[0]
-
+    print("UR:ai[0]=",end='')
+    print(ai)
     s = usocket.socket(ai[0], ai[1], ai[2])
     try:
         s.connect(ai[-1])
@@ -96,6 +97,7 @@ def request(method, url, data=None, json=None, headers={}, stream=None):
             elif l.startswith(b"Location:") and not 200 <= status <= 299:
                 raise NotImplementedError("Redirects not yet supported")
     except OSError:
+        print("ureq error")
         s.close()
         raise
 

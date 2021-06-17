@@ -60,6 +60,8 @@ def wifi(pybytes,wlan):
                 #wlan.init(mode=WLAN.AP, ssid=original_ssid, auth=original_auth, channel=6, antenna=WLAN.INT_ANT)
     except Exception as e:
         print("WiFi connect try failure! ...")
+        wlan.deinit()
+
 
 
 

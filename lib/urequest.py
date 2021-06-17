@@ -97,9 +97,9 @@ def request(method, url, data=None, json=None, headers={}, stream=None):
             elif l.startswith(b"Location:") and not 200 <= status <= 299:
                 raise NotImplementedError("Redirects not yet supported")
     except OSError:
-        print("ureq error")
+        print("ERR HTTP: error...maybe couldnt reach host?")
         s.close()
-        raise
+        #raise
 
     resp = Response(s)
     resp.status_code = status

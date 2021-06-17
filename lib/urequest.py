@@ -96,8 +96,8 @@ def request(method, url, data=None, json=None, headers={}, stream=None):
                     raise ValueError("Unsupported " + l)
             elif l.startswith(b"Location:") and not 200 <= status <= 299:
                 raise NotImplementedError("Redirects not yet supported")
-    except OSError:
-        print("ERR HTTP: error...maybe couldnt reach host?")
+    except (OSError,IndexError):
+        print("ERR HTTP: error...maybe couldnt reach host? or IndexError in data parameter")
         s.close()
         #raise
 

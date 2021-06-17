@@ -5,30 +5,40 @@ from network import LTE
 import time
 import socket
 
-def wifi(pybytes):
-    uart = machine.UART(0, 115200)
-    os.dupterm(uart)
+def wifi(pybytes,wlan):
+    #uart = machine.UART(0, 115200)
+    #os.dupterm(uart)
 
     known_nets = {
-        'AMEL': {'pwd': 'xb00b121374'},
-        'AmelSWS': {'pwd': 'nancy3stl4'},
-        'Amvader1': {'pwd': '4053085956'},
-        'Amvader2': {'pwd': '4053085956'},
+        'AMEL': {'pwd': 'b00b121374'},
+        'AmelSWS': {'pwd': 'xnancy3stl4'},
+        'Amvader1': {'pwd': 'x4053085956'},
+        'Amvader2': {'pwd': 'x4053085956'},
         'NETGEAR25': {'pwd': 'littleshoe029'},
         'SWS': {'pwd': 'ok321321'}}
 
-    if machine.reset_cause() != machine.SOFT_RESET:
-        from network import WLAN
-        wlan = WLAN()
-        wlan.mode(WLAN.STA)
-        original_ssid = wlan.ssid()
-        original_auth = wlan.auth()
+    #if machine.reset_cause() != machine.SOFT_RESET:
+    from network import WLAN
+    #wlan = WLAN()
+    wlan.mode(WLAN.STA)
+    original_ssid = wlan.ssid()
+    original_auth = wlan.auth()
 
-        print("Scanning for known wifi nets")
+    print("Scanning for known wifi nets")
+
+    try:
         available_nets = wlan.scan()
-        nets = frozenset([e.ssid for e in available_nets])
+    except Exception as e:
+        print("Failed to scan available nets")
 
-        known_nets_names = frozenset([key for key in known_nets])
+    try:
+        nets = frozenset([e.ssid for e in available_nets])
+    except Exception as e:
+        print("Failed to scan frozen nets")
+        nets = known_nets
+
+    known_nets_names = frozenset([key for key in known_nets])
+    try:
         net_to_use = list(nets & known_nets_names)
         try:
             net_to_use = net_to_use[0]
@@ -47,12 +57,16 @@ def wifi(pybytes):
         except Exception as e:
             print("Failed to connect to any known network!")
             wlan.deinit()
-            #wlan.init(mode=WLAN.AP, ssid=original_ssid, auth=original_auth, channel=6, antenna=WLAN.INT_ANT)
+                #wlan.init(mode=WLAN.AP, ssid=original_ssid, auth=original_auth, channel=6, antenna=WLAN.INT_ANT)
+    except Exception as e:
+        print("WiFi connect try failure! ...")
+        wlan.deinit()
 
 
 
-def lte(pybytes):
-    lte = LTE()
+
+def lte(pybytes,lte):
+    #lte = LTE()
     #lte.attach( band=13,apn="iot.truphone.com",cid=3,type=LTE.IPV4V6)
     #lte.attach( band=3, apn="iot.truphone.com")
     lte.attach( apn="iot.truphone.com")
@@ -74,6 +88,6 @@ def lte(pybytes):
     #print("] connected!")
     print("connected!")
     #WLAN.deinit()
-    print(socket.getaddrinfo('pycom.io', 80))
+    #print(socket.getaddrinfo('pycom.io', 80))
     print("reconnect pybytes...")
-    pybytes.connect_lte()
+    pybytes.connect()

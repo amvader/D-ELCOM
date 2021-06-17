@@ -52,13 +52,17 @@ def request(method, url, data=None, json=None, headers={}, stream=None):
 
     ai = usocket.getaddrinfo(host, port, 0, usocket.SOCK_STREAM)
     ai = ai[0]
-
+    print("UR:ai[0]=",end='')
+    print(ai)
     s = usocket.socket(ai[0], ai[1], ai[2])
     try:
+        print("sconnect",end='')
         s.connect(ai[-1])
+        print("PROTO|",end='')
         if proto == "https:":
             s = ussl.wrap_socket(s, server_hostname=host)
         s.write(b"%s /%s HTTP/1.0\r\n" % (method, path))
+        print("HOST|",end='')
         if not "Host" in headers:
             s.write(b"Host: %s\r\n" % host)
         # Iterate over keys to avoid tuple alloc
@@ -95,9 +99,10 @@ def request(method, url, data=None, json=None, headers={}, stream=None):
                     raise ValueError("Unsupported " + l)
             elif l.startswith(b"Location:") and not 200 <= status <= 299:
                 raise NotImplementedError("Redirects not yet supported")
-    except OSError:
+    except (OSError,IndexError):
+        print("ERR HTTP: error...maybe couldnt reach host? or IndexError in data parameter")
         s.close()
-        raise
+        #raise
 
     resp = Response(s)
     resp.status_code = status

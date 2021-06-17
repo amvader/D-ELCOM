@@ -11,9 +11,9 @@ def wifi(pybytes,wlan):
 
     known_nets = {
         'AMEL': {'pwd': 'b00b121374'},
-        'AmelSWS': {'pwd': 'nancy3stl4'},
-        'Amvader1': {'pwd': '4053085956'},
-        'Amvader2': {'pwd': '4053085956'},
+        'AmelSWS': {'pwd': 'xnancy3stl4'},
+        'Amvader1': {'pwd': 'x4053085956'},
+        'Amvader2': {'pwd': 'x4053085956'},
         'NETGEAR25': {'pwd': 'littleshoe029'},
         'SWS': {'pwd': 'ok321321'}}
 

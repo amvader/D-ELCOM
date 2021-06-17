@@ -24,7 +24,7 @@ print("ing Main...")
 
 #START my code
 
-#pycom.nvs_set('pybytes_debug', 99)
+pycom.nvs_set('pybytes_debug', 99)
 
 pycom.heartbeat(True)
 wlan=WLAN()
@@ -40,7 +40,7 @@ while True:
     #recheck connection, maybe this is done on interupt?
     if not wlan.isconnected():
         myconnect.wifi(pybytes,wlan)
-    if not lte.isconnected() or not wlan.isconnected():
+    if not lte.isconnected() and not wlan.isconnected():
         myconnect.lte(pybytes,lte)
 
     # Send data continuously to Pybytes
@@ -52,7 +52,7 @@ while True:
             print("conn=both ",end='')
             #wlan.disconnect()
             connType="LTEwifi"
-            pycom.rgbled(0x220000)
+            pycom.rgbled(0xff33fb)
         elif lte.isconnected():
             print("conn=lte ",end='')
             connType="LTE"
@@ -60,7 +60,7 @@ while True:
         elif wlan.isconnected():
             connType="wifi"
             print("conn=wifi ",end='')
-            pycom.rgbled(0x000022)
+            pycom.rgbled(0xff0000)
         else:
             connType="none"
             pycom.heartbeat(True)
@@ -74,6 +74,7 @@ while True:
         mp2 = int(mp1 * (10**2))/(10**2) #scalle to clip decimals...
         mp3 = float(mp2)
         battery_voltage = py.read_battery_voltage()
+        '''
         if pybytes.isconnected():
             pybytes.send_signal(1, i)
             pybytes.send_signal(2, mp3 )
@@ -82,6 +83,7 @@ while True:
         else:
             print(" XpybytesX. ",end='')
             #pybytes.reconnect()
+        '''
 
         print(" send http...", end='')
         mID=ubinascii.hexlify(machine.unique_id())

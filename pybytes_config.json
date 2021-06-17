@@ -1,5 +1,0 @@
-{"wifi": {"ssid": "SWS", "password": "ok321321"}, "wlan_antenna": 0, "dump_ca": false, "server": "mqtt.pybytes.pycom.io", "ssl": false,
- "lte": {"apn": "iot.truephone.com",},
- "device_id": "20cc7b5b-1853-425d-a0a1-66a0b96c30c5", "network_preferences": ["wifi"],
-  "ota_server": {"port": 443, "domain": "software.pycom.io"},
-   "pybytes_autostart": false, "username": "stevenwschmidt@gmail.com"}

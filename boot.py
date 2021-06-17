@@ -35,6 +35,8 @@ for j in range(0,2):
 print("...")
 
 print("Setup pybytes...",end='')
+pycom.nvs_set('pybytes_debug', 99)
+
 conf = PybytesConfig().read_config()
 pybytes = Pybytes(conf)
 #pybytes.start()

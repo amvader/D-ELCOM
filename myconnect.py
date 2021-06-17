@@ -26,7 +26,12 @@ def wifi(pybytes,wlan):
 
     print("Scanning for known wifi nets")
     available_nets = wlan.scan()
-    nets = frozenset([e.ssid for e in available_nets])
+
+    try:
+        nets = frozenset([e.ssid for e in available_nets])
+    except Exception as e:
+        print("Failed to scan frozen nets")
+        nets = known_nets
 
     known_nets_names = frozenset([key for key in known_nets])
     net_to_use = list(nets & known_nets_names)

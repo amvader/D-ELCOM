@@ -35,15 +35,16 @@ time.sleep(7)
 print("pycproc")
 py = Pycoproc()
 print("end pyco")
-k=1
+k=0
 while True:
-    k=k+5
     #recheck connection, maybe this is done on interupt?
     if not lte.isconnected() and not wlan.isconnected():
+        print("goLTE...")
         myconnect.lte(pybytes,lte)
         time.sleep(1)
     if not wlan.isconnected() and not lte.isconnected():
         time.sleep(5)
+        print("goWiFi")
         if not lte.isconnected():
             myconnect.wifi(pybytes,wlan)
 
@@ -116,3 +117,4 @@ while True:
     pycom.rgbled(0x990000)
     print ("done")
     time.sleep(20)
+    k=k+5

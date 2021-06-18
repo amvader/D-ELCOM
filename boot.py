@@ -4,6 +4,10 @@ import pycom
 import machine
 from _pybytes import Pybytes
 from _pybytes_config import PybytesConfig
+conf = PybytesConfig().read_config()
+pybytes = Pybytes(conf)
+
+#pybytes.start()
 
 # boot.py -- run on boot-up
 print("ing",end='')

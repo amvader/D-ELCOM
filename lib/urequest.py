@@ -66,19 +66,23 @@ def request(method, url, data=None, json=None, headers={}, stream=None):
         if not "Host" in headers:
             s.write(b"Host: %s\r\n" % host)
         # Iterate over keys to avoid tuple alloc
+        print("k|",end='')
         for k in headers:
             s.write(k)
             s.write(b": ")
             s.write(headers[k])
             s.write(b"\r\n")
+        print("j|",end='')
         if json is not None:
             assert data is None
             import ujson
             data = ujson.dumps(json)
             s.write(b"Content-Type: application/json\r\n")
+        print("d1|",end='')
         if data:
             s.write(b"Content-Length: %d\r\n" % len(data))
         s.write(b"\r\n")
+        print("d2|",end='')
         if data:
             s.write(data)
 
@@ -89,6 +93,7 @@ def request(method, url, data=None, json=None, headers={}, stream=None):
         reason = ""
         if len(l) > 2:
             reason = l[2].rstrip()
+        print("w|",end='')
         while True:
             l = s.readline()
             if not l or l == b"\r\n":

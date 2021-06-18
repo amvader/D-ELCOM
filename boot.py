@@ -33,7 +33,7 @@ for j in range(0,2):
     pycom.rgbled(0x000000)
 
 print("...")
-
+"""
 print("Setup pybytes...",end='')
 pycom.nvs_set('pybytes_debug', 99)
 
@@ -43,3 +43,4 @@ pybytes = Pybytes(conf)
 print('done')
 print("Pybytes connected=",end='')
 print(pybytes.isconnected())
+"""

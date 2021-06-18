@@ -38,10 +38,13 @@ print("end pyco")
 
 while True:
     #recheck connection, maybe this is done on interupt?
-    if not wlan.isconnected() or not lte.isconnected():
-        myconnect.wifi(pybytes,wlan)
     if not lte.isconnected() and not wlan.isconnected():
         myconnect.lte(pybytes,lte)
+        time.sleep(1)
+    if not wlan.isconnected() and not lte.isconnected():
+        time.sleep(5)
+        if not lte.isconnected():
+            myconnect.wifi(pybytes,wlan)
 
     # Send data continuously to Pybytes
     for i in range(1,6):
@@ -93,9 +96,17 @@ while True:
         r = urequest.post(link,json=dat,headers=header)
         print("Post Data Sent via HTTP " , end='')
         print(r)
-        r.close()
-        pycom.rgbled(0x000011)
-        time.sleep(5)
+        try:
+            r.close()
+            pycom.rgbled(0x000011)
+            time.sleep(5)
+        except:
+            if r=="XXX":
+                while true:
+                    pycom.rgbled(0xff00ff)
+                    time.sleep(.3)
+                    pycom.rgbled(0x000000)
+                    time.sleep(.25)
 
     pycom.heartbeat(False)
     pycom.rgbled(0xFF66B2) # orange

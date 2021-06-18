@@ -51,8 +51,8 @@ def wifi(pybytes,wlan):
             while not wlan.isconnected():
                 machine.idle() # save power while waiting
             print("Connected to "+net_to_use+" with IP address: " + wlan.ifconfig()[0])
-            print("reconnect pybytes...")
-            pybytes.connect()
+            #print("reconnect pybytes...")
+            #pybytes.connect()
 
         except Exception as e:
             print("Failed to connect to any known network!")
@@ -89,5 +89,5 @@ def lte(pybytes,lte):
     print("connected!")
     #WLAN.deinit()
     #print(socket.getaddrinfo('pycom.io', 80))
-    print("reconnect pybytes...")
-    pybytes.connect()
+    #print("reconnect pybytes...")
+    #pybytes.connect()

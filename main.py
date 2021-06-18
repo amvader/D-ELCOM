@@ -35,8 +35,9 @@ time.sleep(7)
 print("pycproc")
 py = Pycoproc()
 print("end pyco")
-
+k=1
 while True:
+    k=k+5
     #recheck connection, maybe this is done on interupt?
     if not lte.isconnected() and not wlan.isconnected():
         myconnect.lte(pybytes,lte)
@@ -90,7 +91,7 @@ while True:
 
         print(" send http...", end='')
         mID=ubinascii.hexlify(machine.unique_id())
-        dat={"deviceToken": mID,"altitude":mp3, "batteryV":battery_voltage, "connType":connType, "event":i }
+        dat={"deviceToken": mID,"altitude":mp3, "batteryV":battery_voltage, "connType":connType, "event":k+i }
         header={"content-type":"application/json"}
         link="https://amvader.net/iot/pycom/elcom-hook.php"
         r = urequest.post(link,json=dat,headers=header)
@@ -99,7 +100,7 @@ while True:
         try:
             r.close()
             pycom.rgbled(0x000011)
-            time.sleep(5)
+            time.sleep(10)
         except:
             if r=="XXX":
                 while true:
@@ -110,8 +111,8 @@ while True:
 
     pycom.heartbeat(False)
     pycom.rgbled(0xFF66B2) # orange
-    time.sleep(15)
+    time.sleep(20)
 
     pycom.rgbled(0x990000)
     print ("done")
-    time.sleep(15)
+    time.sleep(20)

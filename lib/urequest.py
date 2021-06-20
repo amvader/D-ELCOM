@@ -57,13 +57,8 @@ def request(method, url, data=None, json=None, headers={}, stream=None):
     s = usocket.socket(ai[0], ai[1], ai[2])
     try:
         respSuccess=True
-<<<<<<< HEAD
         #print("sconnect CMD=s.connect(",end='')
         #print(ai[-1])
-=======
-        print("sconnect CMD=s.connect(",end='')
-        print(ai[-1])
->>>>>>> 8b84d2e25a6b5337ee37c6e9c67ec1047b509be0
         s.connect(ai[-1])
         print("PROTO|",end='')
         if proto == "https:":

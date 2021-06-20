@@ -35,13 +35,18 @@ time.sleep(7)
 print("pycproc")
 py = Pycoproc()
 print("end pyco")
-
+k=0
 while True:
     #recheck connection, maybe this is done on interupt?
-    if not wlan.isconnected() or not lte.isconnected():
-        myconnect.wifi(pybytes,wlan)
     if not lte.isconnected() and not wlan.isconnected():
+        print("goLTE...")
         myconnect.lte(pybytes,lte)
+        time.sleep(1)
+    if not wlan.isconnected() and not lte.isconnected():
+        time.sleep(5)
+        print("goWiFi")
+        if not lte.isconnected():
+            myconnect.wifi(pybytes,wlan)
 
     # Send data continuously to Pybytes
     for i in range(1,6):
@@ -67,7 +72,7 @@ while True:
             print("conn=none ",end='')
 
 
-        print(i)
+        print(k)
         print(" -> ",end='')
         mp = MPL3115A2(py,mode=ALTITUDE)
         mp1 = mp.altitude() * 3.281 #convert to ft
@@ -87,20 +92,31 @@ while True:
 
         print(" send http...", end='')
         mID=ubinascii.hexlify(machine.unique_id())
-        dat={"deviceToken": mID,"altitude":mp3, "batteryV":battery_voltage, "connType":connType, "event":i }
+        dat={"deviceToken": mID,"altitude":mp3, "batteryV":battery_voltage, "connType":connType, "event":k+i }
         header={"content-type":"application/json"}
         link="https://amvader.net/iot/pycom/elcom-hook.php"
         r = urequest.post(link,json=dat,headers=header)
         print("Post Data Sent via HTTP " , end='')
         print(r)
-        r.close()
-        pycom.rgbled(0x000011)
-        time.sleep(5)
+        try:
+            r.close()
+            pycom.rgbled(0x000011)
+            time.sleep(10)
+        except:
+            if r=="XXX":
+                while true:
+                    pycom.rgbled(0xff00ff)
+                    time.sleep(.3)
+                    pycom.rgbled(0x000000)
+                    time.sleep(.25)
 
     pycom.heartbeat(False)
     pycom.rgbled(0xFF66B2) # orange
-    time.sleep(15)
+    time.sleep(20)
 
     pycom.rgbled(0x990000)
-    print ("done")
-    time.sleep(15)
+    print ("Done with loop...")
+    print("")
+    print("")
+    time.sleep(20)
+    k=k+5

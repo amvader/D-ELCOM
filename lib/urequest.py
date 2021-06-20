@@ -52,15 +52,18 @@ def request(method, url, data=None, json=None, headers={}, stream=None):
 
     ai = usocket.getaddrinfo(host, port, 0, usocket.SOCK_STREAM)
     ai = ai[0]
-    print("UR:ai[0]=",end='')
-    print(ai)
+    #print("UR:ai[0]=",end='')
+    #print(ai)
     s = usocket.socket(ai[0], ai[1], ai[2])
     try:
-        print("sconnect",end='')
+        respSuccess=True
+        #print("sconnect CMD=s.connect(",end='')
+        #print(ai[-1])
         s.connect(ai[-1])
         print("PROTO|",end='')
         if proto == "https:":
             s = ussl.wrap_socket(s, server_hostname=host)
+        print("WRPD|",end='')
         s.write(b"%s /%s HTTP/1.0\r\n" % (method, path))
         print("HOST|",end='')
         if not "Host" in headers:
@@ -107,12 +110,16 @@ def request(method, url, data=None, json=None, headers={}, stream=None):
     except (OSError,IndexError):
         print("ERR HTTP: error...maybe couldnt reach host? or IndexError in data parameter")
         s.close()
+        respSuccess=False
         #raise
 
-    resp = Response(s)
-    resp.status_code = status
-    resp.reason = reason
-    return resp
+    if respSuccess==True:
+        resp = Response(s)
+        resp.status_code = status
+        resp.reason = reason
+        return resp
+    else:
+        return "XXX"
 
 
 def head(url, **kw):
@@ -121,6 +128,10 @@ def head(url, **kw):
 def get(url, **kw):
     return request("GET", url, **kw)
 
+"""
+        dat={"deviceToken": mID,"altitude":mp3, "batteryV":battery_voltage, "connType":connType, "event":i }
+        r = urequest.post("https://amvader.net/iot/pycom/elcom-hook.php",json=dat,headers={"content-type":"application/json"})
+"""
 def post(url, **kw):
     return request("POST", url, **kw)
 

@@ -58,6 +58,7 @@ def signal_quality(rsrp_center=-110, rsrp_hw=15, rsrq_center=-15, rsrq_hw=7.5,
     # ever setting it when using "legacy" mode - see lte_check_attached() in
     # https://github.com/pycom/pycom-micropython-sigfox/blob/master/esp32/mods/modlte.c)
     # In my case I could not attach when n!=2. I am not sure I am using legacy mode though.
+    """
     cereg=at_match(lte,'AT+CEREG?',"\+CEREG:\s([0-9]+),([0-9]+)",2)
     if len(cereg)==2:
         if int(cereg[0])!=2:
@@ -67,9 +68,12 @@ def signal_quality(rsrp_center=-110, rsrp_hw=15, rsrq_center=-15, rsrq_hw=7.5,
                 sys.exit()
             cereg=at_match(lte,'AT+CEREG?',"\+CEREG:\s([0-9]+),([0-9]+)",2)
         print("cereg",cereg)
+    """
     if show_status:
         print("attaching..")
-    lte.attach(**ATTACH_PARAMETERS)
+#    lte.attach(**ATTACH_PARAMETERS)
+    lte.attach( apn="iot.truphone.com",band=13,  cid=3, type=LTE.IP, legacyattach=True)
+
     oldstat=(None,None)
     while not lte.isattached():
         time.sleep(0.25)

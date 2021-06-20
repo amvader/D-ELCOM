@@ -67,14 +67,19 @@ def lte(pybytes,lte):
     MyApn = "iot.truephone.com"
     #lte = LTE()
     lte.init()
-    lte.attach(apn=MyApn)
+    #lte.attach(apn=MyApn)
+    lte.attach( apn="iot.truphone.com",band=13,  cid=3, type=LTE.IP, legacyattach=True)
+
     time.sleep(1)
     print("LTE coverage:", lte.ue_coverage())
 
     while not lte.isattached():
+        #time.sleep(0.5)
+        #print('Attaching...')
         time.sleep(0.5)
-        print('Attaching...')
-
+        print('.',end='')
+        print(lte.send_at_cmd('AT!="fsm"'))         # get the System FSM
+        #print("band 13")
     lte.connect()
     while not lte.isconnected():
         time.sleep(0.5)

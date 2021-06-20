@@ -30,7 +30,7 @@ pycom.heartbeat(True)
 wlan=WLAN()
 lte=LTE()
 
-time.sleep(7)
+time.sleep(1)
 
 print("pycproc")
 py = Pycoproc()

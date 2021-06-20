@@ -68,8 +68,8 @@ def wifi(pybytes,wlan):
 def lte(pybytes,lte):
     #lte = LTE()
     #lte.attach( band=13,apn="iot.truphone.com",cid=3,type=LTE.IPV4V6)
-    #lte.attach( band=3, apn="iot.truphone.com")
-    lte.attach( apn="iot.truphone.com",band=13,  cid=3, type=LTE.IP, legacyattach=True)
+    lte.attach( band=3, apn="iot.truphone.com")
+    #lte.attach( apn="iot.truphone.com",band=13,  cid=3, type=LTE.IP, legacyattach=True)
     print("LTE: attaching..",end='')
     while not lte.isattached():
         time.sleep(0.25)
@@ -78,7 +78,7 @@ def lte(pybytes,lte):
         #print("band 13")
     print("attached!")
     print("LTE: connecting...",end='')
-    lte.connect()
+    lte.connect(cid=3)
     #print("connecting [##",end='')
     while not lte.isconnected():
         time.sleep(0.25)

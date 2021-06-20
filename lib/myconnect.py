@@ -5,6 +5,8 @@ from network import LTE
 import time
 import socket
 
+
+
 def wifi(pybytes,wlan):
     #uart = machine.UART(0, 115200)
     #os.dupterm(uart)
@@ -89,5 +91,5 @@ def lte(pybytes,lte):
     print("connected!")
     #WLAN.deinit()
     #print(socket.getaddrinfo('pycom.io', 80))
-    print("reconnect pybytes...")
-    pybytes.connect()
+    #print("reconnect pybytes...")
+    #pybytes.connect()

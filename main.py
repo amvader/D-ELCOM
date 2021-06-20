@@ -115,8 +115,12 @@ while True:
     time.sleep(20)
 
     pycom.rgbled(0x990000)
+<<<<<<< HEAD
     print ("Done with loop...")
     print("")
     print("")
+=======
+    print ("done")
+>>>>>>> 8b84d2e25a6b5337ee37c6e9c67ec1047b509be0
     time.sleep(20)
     k=k+5

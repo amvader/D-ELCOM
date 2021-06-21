@@ -13,7 +13,7 @@ import machine
 print("hello")
 
 myconnect.startheart()
-time.sleep(10)
+time.sleep(2)
 myconnect.lteconnect()
 
 while True:

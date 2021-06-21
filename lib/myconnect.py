@@ -36,16 +36,14 @@ def wificonnect():
     try:
         available_nets = wlan.scan()
     except Exception as e:
-        print("Failed to scan available nets {}",format(e))
+        print("Failed to scan available nets-",e.data)
 
     try:
         nets = frozenset([e.ssid for e in available_nets])
     except Exception as e:
-        print("Failed to scan frozen nets {}", format(e))
+        print("Failed to scan frozen nets-",e.data)
         nets = known_nets
 
-    #cancel scanned nets
-    known_nets=''
 
     known_nets_names = frozenset([key for key in known_nets])
     try:
@@ -75,8 +73,12 @@ def wificonnect():
 def disconnect(net):
     if net=="WiFi":
         wlan.disconnect()
+        print("disconnect wifi")
+        time.sleep(1)
     elif net=="LTE":
         lte.disconnect()
+        print("disconnect lte")
+        time.sleep(1)
 
 
 

@@ -16,14 +16,20 @@ myconnect.startheart()
 time.sleep(10)
 myconnect.lteconnect()
 
-print("ConnType=",end='')
-print(myconnect.connType())
+while True:
+    print("ConnType=",end='')
+    print(myconnect.connType())
 
-randN=machine.rng()%10
-rand2=randN%10
+    randN=machine.rng()%10
 
-print("hello")
-print(rand2)
-time.sleep(20)
-#myconnect.disconnect("WiFi")
-print("good bye")
+    print("hello! Interval=",end='')
+    print(randN)
+    time.sleep(randN)
+    myconnect.disconnect("WiFi")
+    myconnect.disconnect("LTE")
+    time.sleep(2)
+    if (randN==2 or randN==4 or randN==6 or randN==8):
+        myconnect.wificonnect()
+    else:
+        myconnect.lteconnect()
+    print("good bye")

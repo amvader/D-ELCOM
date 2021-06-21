@@ -12,15 +12,15 @@ wlan=WLAN()
 lte=LTE()
 beatcolor=0x0000ff
 
-def wifi():
+def wificonnect():
     #uart = machine.UART(0, 115200)
     #os.dupterm(uart)
 
     known_nets = {
         'AMEL': {'pwd': 'b00b121374'},
-        'AmelSWS': {'pwd': 'xnancy3stl4'},
-        'Amvader1': {'pwd': 'x4053085956'},
-        'Amvader2': {'pwd': 'x4053085956'},
+        'AmelSWS': {'pwd': 'nancy3stl4'},
+        'Amvader1': {'pwd': '4053085956'},
+        'Amvader2': {'pwd': '4053085956'},
         'NETGEAR25': {'pwd': 'littleshoe029'},
         'SWS': {'pwd': 'ok321321'}}
 
@@ -36,13 +36,16 @@ def wifi():
     try:
         available_nets = wlan.scan()
     except Exception as e:
-        print("Failed to scan available nets")
+        print("Failed to scan available nets {}",format(e))
 
     try:
         nets = frozenset([e.ssid for e in available_nets])
     except Exception as e:
-        print("Failed to scan frozen nets")
+        print("Failed to scan frozen nets {}", format(e))
         nets = known_nets
+
+    #cancel scanned nets
+    known_nets=''
 
     known_nets_names = frozenset([key for key in known_nets])
     try:
@@ -91,6 +94,7 @@ def lteconnect():
         #print("band 13")
     print("attached!")
     print("LTE: connecting...",end='')
+    #lte.init()
     lte.connect()
     #print("connecting [##",end='')
     while not lte.isconnected():
@@ -130,7 +134,6 @@ def myheart(bps,colorH):
         time.sleep(.1)
         pycom.rgbled(0x000000)
         time.sleep(bps)
-        print(machine.rng())
 
 
 def startheart():

@@ -11,6 +11,15 @@ print(conf)
 global pybytes
 pybytes = Pybytes(conf)
 
+"""
+import sqnsupgrade
+print("*************************************")
+print("Modem Firmware:",end='')
+print(sqnsupgrade.info())
+print("*************************************")
+time.sleep(10)
+"""
+
 # boot.py -- run on boot-up
 for j in range(0,2):
     pycom.rgbled(0x00000f)

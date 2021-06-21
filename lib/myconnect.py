@@ -131,18 +131,21 @@ def connType():
 
 def myheart(bps,colorH):
     while True:
-        if lte.isconnected() and wlan.isconnected():
-            colorH=0x00ff00
-        elif wlan.isconnected():
-            colorH=0x0000ff
-        elif lte.isconnected():
-            colorH=0x00ffff
-        else:
-            colorH=0xff0000
-        pycom.rgbled(colorH)
-        time.sleep(.1)
-        pycom.rgbled(0x000000)
-        time.sleep(bps)
+        try:
+            if lte.isconnected() and wlan.isconnected():
+                colorH=0x00ff00
+            elif wlan.isconnected():
+                colorH=0x0000ff
+            elif lte.isconnected():
+                colorH=0xffffff
+            else:
+                colorH=0xff0000
+            pycom.rgbled(colorH)
+            time.sleep(.1)
+            pycom.rgbled(0x000000)
+            time.sleep(bps)
+        except:
+            print("")
 
 
 def startheart():

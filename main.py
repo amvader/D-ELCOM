@@ -24,12 +24,12 @@ while True:
 
     print("hello! Interval=",end='')
     print(randN)
-    time.sleep(randN+30)
+    time.sleep(randN+60)
     myconnect.disconnect("WiFi")
     myconnect.disconnect("LTE")
     time.sleep(2)
     if (randN==2 or randN==4 or randN==6 or randN==8):
-        myconnect.wificonnect()
-    else:
         myconnect.lteconnect()
+    else:
+        myconnect.wificonnect()
     print("good bye")

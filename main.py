@@ -1,15 +1,29 @@
 # main.py -- put your code here!
-from network import WLAN
-from network import LTE
-import pycom
 
+import pycom
+import _thread
+import time
+#import globals
 #my libs
 import myconnect
+import machine
 
 
-pycom.heartbeat(True)
+#pycom.heartbeat(True)
 print("hello")
 
-lte=LTE()
+myconnect.startheart()
+time.sleep(10)
+myconnect.lteconnect()
 
-myconnect.lte(pycom,lte)
+print("ConnType=",end='')
+print(myconnect.connType())
+
+randN=machine.rng()%10
+rand2=randN%10
+
+print("hello")
+print(rand2)
+time.sleep(20)
+#myconnect.disconnect("WiFi")
+print("good bye")

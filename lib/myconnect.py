@@ -4,10 +4,15 @@ import pycom
 from network import LTE
 import time
 import socket
+from network import WLAN
+from network import LTE
+import _thread
 
+wlan=WLAN()
+lte=LTE()
+beatcolor=0x0000ff
 
-
-def wifi(pybytes,wlan):
+def wifi():
     #uart = machine.UART(0, 115200)
     #os.dupterm(uart)
 
@@ -64,10 +69,16 @@ def wifi(pybytes,wlan):
         print("WiFi connect try failure! ...")
         wlan.deinit()
 
+def disconnect(net):
+    if net=="WiFi":
+        wlan.disconnect()
+    elif net=="LTE":
+        lte.disconnect()
 
 
 
-def lte(pybytes,lte):
+
+def lteconnect():
     #lte = LTE()
     #lte.attach( band=13,apn="iot.truphone.com",cid=3,type=LTE.IPV4V6)
     #lte.attach( band=3, apn="iot.truphone.com")
@@ -93,3 +104,34 @@ def lte(pybytes,lte):
     #print(socket.getaddrinfo('pycom.io', 80))
     #print("reconnect pybytes...")
     #pybytes.connect()
+
+def connType():
+    if lte.isconnected() and wlan.isconnected():
+        return "LTEWiFi"
+    elif wlan.isconnected():
+        return "WiFi"
+    elif lte.isconnected():
+        return "LTE"
+    else:
+        return ("None")
+
+
+def myheart(bps,colorH):
+    while True:
+        if lte.isconnected() and wlan.isconnected():
+            colorH=0x00ff00
+        elif wlan.isconnected():
+            colorH=0x0000ff
+        elif lte.isconnected():
+            colorH=0x00ffff
+        else:
+            colorH=0xff0000
+        pycom.rgbled(colorH)
+        time.sleep(.1)
+        pycom.rgbled(0x000000)
+        time.sleep(bps)
+        print(machine.rng())
+
+
+def startheart():
+    _thread.start_new_thread(myheart, (2, beatcolor))

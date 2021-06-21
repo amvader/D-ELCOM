@@ -7,10 +7,17 @@ import socket
 from network import WLAN
 from network import LTE
 import _thread
+from _pybytes import Pybytes
+from _pybytes_config import PybytesConfig
 
 wlan=WLAN()
 lte=LTE()
 beatcolor=0x0000ff
+global conf
+conf = PybytesConfig().read_config()
+global pybytes
+pybytes = Pybytes(conf)
+
 
 def wificonnect():
     #uart = machine.UART(0, 115200)
@@ -36,12 +43,12 @@ def wificonnect():
     try:
         available_nets = wlan.scan()
     except Exception as e:
-        print("Failed to scan available nets-",e.data)
+        print("Failed to scan available nets-")
 
     try:
         nets = frozenset([e.ssid for e in available_nets])
     except Exception as e:
-        print("Failed to scan frozen nets-",e.data)
+        print("Failed to scan frozen nets-")
         nets = known_nets
 
 
@@ -59,16 +66,16 @@ def wificonnect():
             while not wlan.isconnected():
                 machine.idle() # save power while waiting
             print("Connected to "+net_to_use+" with IP address: " + wlan.ifconfig()[0])
-            print("reconnect pybytes...")
+            print("reconnect pybytes by WIFI...")
             pybytes.connect()
 
         except Exception as e:
             print("Failed to connect to any known network!")
-            wlan.deinit()
+            #wlan.deinit()
                 #wlan.init(mode=WLAN.AP, ssid=original_ssid, auth=original_auth, channel=6, antenna=WLAN.INT_ANT)
     except Exception as e:
         print("WiFi connect try failure! ...")
-        wlan.deinit()
+        #wlan.disconnect()
 
 def disconnect(net):
     if net=="WiFi":
@@ -103,13 +110,13 @@ def lteconnect():
         time.sleep(0.25)
         #print('#',end='')
         #print(lte.send_at_cmd('AT!="showphy"'))
-        print(lte.send_at_cmd('AT!="fsm"'))
+        #print(lte.send_at_cmd('AT!="fsm"'))
     #print("] connected!")
     print("connected!")
+    print("reconnect pybytes by LTE...")
+    pybytes.connect_lte()
     #WLAN.deinit()
     #print(socket.getaddrinfo('pycom.io', 80))
-    #print("reconnect pybytes...")
-    #pybytes.connect()
 
 def connType():
     if lte.isconnected() and wlan.isconnected():

@@ -24,7 +24,7 @@ while True:
 
     print("hello! Interval=",end='')
     print(randN)
-    time.sleep(randN)
+    time.sleep(randN+30)
     myconnect.disconnect("WiFi")
     myconnect.disconnect("LTE")
     time.sleep(2)

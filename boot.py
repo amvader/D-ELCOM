@@ -3,6 +3,13 @@ import time
 import machine
 import pycom
 print("boot.py start->")
+from _pybytes import Pybytes
+from _pybytes_config import PybytesConfig
+global conf
+conf = PybytesConfig().read_config()
+print(conf)
+global pybytes
+pybytes = Pybytes(conf)
 
 # boot.py -- run on boot-up
 for j in range(0,2):

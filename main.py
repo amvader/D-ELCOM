@@ -13,11 +13,13 @@ import G
 print("main.py start->",G.x)
 print("<- ********************************************* ->")
 
+G.pconfig()
+time.sleep(5)
+
 myconnect.startheart()
-time.sleep(2)
 myconnect.lteconnect()
 G.pconfig()
-time.sleep(60)
+time.sleep(5)
 
 print("main loop ************************************** ->")
 while True:

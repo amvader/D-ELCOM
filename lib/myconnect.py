@@ -33,7 +33,7 @@ def lteconnect():
         while not lte.isattached():
             time.sleep(0.25)
             print('.',end='')
-            print(lte.send_at_cmd('AT!="fsm"'))         # get the System FSM
+            #print(lte.send_at_cmd('AT!="fsm"'))         # get the System FSM
             #print("band 13")
         print("attached!")
         lte.connect()

@@ -2,18 +2,23 @@ import pycom
 from _pybytes import Pybytes
 from _pybytes_config import PybytesConfig
 
-x=3
-conf = PybytesConfig().read_config()
-pybytes = Pybytes(conf)
+x='!'
+global conf
+global pybytes
 
 def pconfig():
-    G.pybytes = Pybytes(G.conf)
+    global conf
+    global pybytes
+    conf = PybytesConfig().read_config()
+    pybytes = Pybytes(conf)
     print("OLD Conf -> ****")
-    print(G.conf)
-    G.pybytes.update_config("wifi", value={"ssid": "SWS", "password": "ok321321"}, permanent=True, silent=False, reconnect=False)
-    G.conf = PybytesConfig().read_config()
+    print(conf)
+    pybytes.update_config("wifi", value={"ssid": "SWS2", "password": "ok321321"}, permanent=False, silent=False, reconnect=False)
+    nets="lte,wifi"
+    pybytes.update_config("network_preferences", value="lte", permanent=False, silent=False, reconnect=False)
+    #conf = PybytesConfig().read_config()
     print("New Conf -> ****")
-    print(G.conf)
+    print(conf)
 
 
 

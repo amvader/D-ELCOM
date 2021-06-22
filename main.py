@@ -7,16 +7,16 @@ import machine
 #import globals
 #my libs
 import myconnect
-import gbl
+import G
 
 #pycom.heartbeat(True)
-print("main.py start->",gbl.x)
+print("main.py start->",G.x)
 print("<- ********************************************* ->")
 
 myconnect.startheart()
 time.sleep(2)
 myconnect.lteconnect()
-gbl.pconfig()
+G.pconfig()
 time.sleep(60)
 
 print("main loop ************************************** ->")
@@ -34,7 +34,7 @@ while True:
         time.sleep(5)
     else:
         print("Pybytes Connected?= ",end='')
-        print(gbl.pybytes.isconnected())
+        print(G.pybytes.isconnected())
 
     print("ConnType=",end='')
     print(myconnect.connType())

@@ -7,13 +7,13 @@ conf = PybytesConfig().read_config()
 pybytes = Pybytes(conf)
 
 def pconfig():
-    gbl.pybytes = Pybytes(gbl.conf)
+    G.pybytes = Pybytes(G.conf)
     print("OLD Conf -> ****")
-    print(gbl.conf)
-    gbl.pybytes.update_config("wifi", value={"ssid": "SWS", "password": "ok321321"}, permanent=True, silent=False, reconnect=False)
-    gbl.conf = PybytesConfig().read_config()
+    print(G.conf)
+    G.pybytes.update_config("wifi", value={"ssid": "SWS", "password": "ok321321"}, permanent=True, silent=False, reconnect=False)
+    G.conf = PybytesConfig().read_config()
     print("New Conf -> ****")
-    print(gbl.conf)
+    print(G.conf)
 
 
 
@@ -33,7 +33,7 @@ time.sleep(10)
 
 
 
-print(gbl.conf)
-gbl.pybytes = Pybytes(gbl.conf)
+print(G.conf)
+G.pybytes = Pybytes(G.conf)
 
 """

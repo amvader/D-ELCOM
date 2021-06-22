@@ -2,7 +2,7 @@
 import time
 import machine
 import pycom
-import gbl
+import G
 
 print("boot.py start->")
 print("<- ********************************************* ->")

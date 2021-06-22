@@ -3,19 +3,23 @@
 import pycom
 import _thread
 import time
+import machine
 #import globals
 #my libs
 import myconnect
-import machine
-
+import gbl
 
 #pycom.heartbeat(True)
-print("hello")
+print("main.py start->",gbl.x)
+print("<- ********************************************* ->")
 
 myconnect.startheart()
 time.sleep(2)
 myconnect.lteconnect()
+gbl.pconfig()
+time.sleep(60)
 
+print("main loop ************************************** ->")
 while True:
     randN=machine.rng()%10
     print("hello! Interval=",end='')
@@ -30,14 +34,14 @@ while True:
         time.sleep(5)
     else:
         print("Pybytes Connected?= ",end='')
-        print(pybytes.isconnected())
+        print(gbl.pybytes.isconnected())
 
     print("ConnType=",end='')
     print(myconnect.connType())
 
 
-    if not pybytes.isconnected():
-        pybytes.connect()
+    #if not pybytes.isconnected():
+    #    pybytes.connect()
 
     time.sleep(randN+60)
 

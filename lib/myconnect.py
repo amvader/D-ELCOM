@@ -6,16 +6,10 @@ import socket
 from network import WLAN
 from network import LTE
 import _thread
-from _pybytes import Pybytes
-from _pybytes_config import PybytesConfig
 
 wlan=WLAN()
 lte=LTE()
 beatcolor=0x0000ff
-global conf
-conf = PybytesConfig().read_config()
-global pybytes
-pybytes = Pybytes(conf)
 
 
 def wificonnect():

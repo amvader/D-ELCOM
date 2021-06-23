@@ -108,8 +108,8 @@ def connThread(lte,py,duration):
         lastConnType=G.connType
         time.sleep(duration)
 
-def startConn():
-    _thread.start_new_thread(connThread, (True,True,15))
+def startConn(LTEconn,PYconn,duration):
+    _thread.start_new_thread(connThread, (LTEconn,PYconn,duration))
 
 def startheart():
     _thread.start_new_thread(myheart, (2, beatcolor))

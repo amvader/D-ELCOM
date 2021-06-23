@@ -15,9 +15,6 @@ beatcolor=0x0000ff
 global myconnType
 
 
-def connThread():
-    print("start connThread")
-
 def wificonnect():
     wlan.mode(WLAN.STA)
     try:
@@ -95,6 +92,24 @@ def myheart(bps,colorH):
         except:
             print("")
 
+
+def connThread(lte,py,duration):
+    while True:
+        print(" * Check Conn * "")
+        if G.connType=="None":
+            if lte:
+                if connType()=="None":
+                    print("** ** ** ** ** ** ** ** ** LTE Connect ** ** ** ** ** ** ** ** ** **")
+                    lteconnect()
+            if py:
+                if not G.pybytes.isconnected():
+                    print("** ** ** ** ** ** ** ** ** PyBytes Connect ** ** ** ** ** ** ** ** **")
+                    G.pybytes.connect()
+        lastConnType=G.connType
+        time.sleep(duration)
+
+def startConn():
+    _thread.start_new_thread(connThread, (True,True,15))
 
 def startheart():
     _thread.start_new_thread(myheart, (2, beatcolor))

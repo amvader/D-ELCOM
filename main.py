@@ -19,23 +19,19 @@ G.pconfig()
 myconnect.startheart()
 time.sleep(3)
 interval=1
+myconnect.startConn()
 print("main loop ************************************** ->")
 while True:
     randN=machine.rng()%10
     print("Interval=",end='');print(interval)
 
-    if myconnect.connType()=="None":
-        myconnect.lteconnect()
-
-    if not G.pybytes.isconnected():
-        G.pybytes.connect()
 
     if G.pybytes.isconnected():
         G.pybytes.send_signal(1, interval)
 
-    print("Pybytes Connected?= ",end='');print(G.pybytes.isconnected())
-    print("ConnType=",end='');print(G.connType)
+    print("Pybytes Connected?= ",end='');print(G.pybytes.isconnected(),end='')
+    print(" Network Connected?= ",end='');print(G.connType,' / ',myconnect.connType())
 
-    time.sleep(randN+15)
+    time.sleep(5)
     interval+=1
     print("-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*")

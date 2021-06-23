@@ -7,6 +7,7 @@ x='!'
 global conf
 global pybytes
 global connType
+
 connType="None" #default to none until set
 
 def pconfig():

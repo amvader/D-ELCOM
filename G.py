@@ -14,18 +14,19 @@ device_id="9c8cab6e-f412-4a6d-beb5-3b03d54975c9" #fipy-a1
 
 connType="None" #default to none until set
 
-def pconfig():
+def pconfig(update):
     global conf
     global pybytes
     conf = PybytesConfig().read_config()
     pybytes = Pybytes(conf)
-    #print("OLD Conf -> ****");#print(conf)
-    pybytes.update_config("wifi", value={"ssid": "SWS", "password": "ok321321"}, permanent=False, silent=False, reconnect=False)
-    pybytes.update_config("device_id", value=device_id, permanent=True, silent=False, reconnect=False)
-    nets="lte,wifi"
-    pybytes.update_config("network_preferences", value="lte", permanent=False, silent=False, reconnect=False)
-    #conf = PybytesConfig().read_config()
-    #print("New Conf -> ****");#print(conf)
+    if update:
+        #print("OLD Conf -> ****");#print(conf)
+        pybytes.update_config("wifi", value={"ssid": "SWS", "password": "ok321321"}, permanent=False, silent=False, reconnect=False)
+        pybytes.update_config("device_id", value=device_id, permanent=True, silent=False, reconnect=False)
+        nets="lte,wifi"
+        pybytes.update_config("network_preferences", value="lte", permanent=False, silent=False, reconnect=False)
+        #conf = PybytesConfig().read_config()
+        #print("New Conf -> ****");#print(conf)
 
 
 

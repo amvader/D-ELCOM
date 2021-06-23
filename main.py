@@ -13,13 +13,13 @@ import G
 print("main.py start->",G.x)
 print("<- ********************************************* ->")
 
-G.pconfig()
+G.pconfig(False)
 #time.sleep(5)
 
 myconnect.startheart()
 time.sleep(3)
 interval=1
-myconnect.startConn(True,True,15)
+myconnect.startConn(True,True,60)
 print("main loop ************************************** ->")
 while True:
     randN=machine.rng()%10
@@ -32,6 +32,6 @@ while True:
     print("Pybytes Connected?= ",end='');print(G.pybytes.isconnected(),end='')
     print(" Network Connected?= ",end='');print(G.connType,' / ',myconnect.connType())
 
-    time.sleep(5)
+    time.sleep(30)
     interval+=1
     print("-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*")

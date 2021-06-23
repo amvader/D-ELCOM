@@ -95,7 +95,7 @@ def myheart(bps,colorH):
 
 def connThread(lte,py,duration):
     while True:
-        print(" * Check Conn * "")
+        print(" !! Check Conn !! " )
         if G.connType=="None":
             if lte:
                 if connType()=="None":

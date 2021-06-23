@@ -13,7 +13,7 @@ import G
 print("main.py start->",G.x)
 print("<- ********************************************* ->")
 
-G.pconfig(False)
+G.pconfig(True)
 #time.sleep(5)
 
 myconnect.startheart()

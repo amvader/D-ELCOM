@@ -22,7 +22,7 @@ def pconfig(update):
     if update:
         #print("OLD Conf -> ****");#print(conf)
         pybytes.update_config("wifi", value={"ssid": "SWS", "password": "ok321321"}, permanent=False, silent=False, reconnect=False)
-        pybytes.update_config("device_id", value=device_id, permanent=True, silent=False, reconnect=False)
+        #pybytes.update_config("device_id", value=device_id, permanent=True, silent=False, reconnect=False)
         nets="lte,wifi"
         pybytes.update_config("network_preferences", value="lte", permanent=False, silent=False, reconnect=False)
         #conf = PybytesConfig().read_config()

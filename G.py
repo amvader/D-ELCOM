@@ -14,14 +14,12 @@ def pconfig():
     global pybytes
     conf = PybytesConfig().read_config()
     pybytes = Pybytes(conf)
-    print("OLD Conf -> ****")
-    print(conf)
+    #print("OLD Conf -> ****");#print(conf)
     pybytes.update_config("wifi", value={"ssid": "SWS2", "password": "ok321321"}, permanent=False, silent=False, reconnect=False)
     nets="lte,wifi"
-    pybytes.update_config("network_preferences", value="lte", permanent=False, silent=False, reconnect=True)
+    pybytes.update_config("network_preferences", value="lte", permanent=False, silent=False, reconnect=False)
     #conf = PybytesConfig().read_config()
-    print("New Conf -> ****")
-    print(conf)
+    #print("New Conf -> ****");#print(conf)
 
 
 

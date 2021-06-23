@@ -6,11 +6,17 @@ import socket
 from network import WLAN
 from network import LTE
 import _thread
+import G
 
 wlan=WLAN()
 lte=LTE()
 beatcolor=0x0000ff
 
+global myconnType
+
+
+def connThread():
+    print("start connThread")
 
 def wificonnect():
     wlan.mode(WLAN.STA)
@@ -58,12 +64,16 @@ def disconnect(net):
 
 def connType():
     if lte.isconnected() and wlan.isconnected():
+        G.connType="LTEWiFi"
         return "LTEWiFi"
     elif wlan.isconnected():
+        G.connType="WiFi"
         return "WiFi"
     elif lte.isconnected():
+        G.connType="LTE"
         return "LTE"
     else:
+        G.connType="None"
         return ("None")
 
 

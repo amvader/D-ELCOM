@@ -17,37 +17,21 @@ G.pconfig()
 time.sleep(5)
 
 myconnect.startheart()
-myconnect.lteconnect()
-G.pconfig()
 time.sleep(5)
 
 print("main loop ************************************** ->")
 while True:
     randN=machine.rng()%10
-    print("hello! Interval=",end='')
-    print(randN)
+    print("Interval=",end='');print(randN)
 
-    if (randN==2 or randN==4 or randN==6 or randN==8):
+    if myconnect.connType=="None":
         myconnect.lteconnect()
-    else:
-        myconnect.wificonnect()
 
-    if myconnect.connType()=="None":
-        time.sleep(5)
-    else:
-        print("Pybytes Connected?= ",end='')
-        print(G.pybytes.isconnected())
+    if not G.pybytes.isconnected():
+        G.pybytes.connect()
 
-    print("ConnType=",end='')
-    print(myconnect.connType())
+    print("Pybytes Connected?= ",end='');print(G.pybytes.isconnected())
+    print("ConnType=",end='');print(G.connType)
 
-
-    #if not pybytes.isconnected():
-    #    pybytes.connect()
-
-    time.sleep(randN+60)
-
-    myconnect.disconnect("WiFi")
-    myconnect.disconnect("LTE")
-    time.sleep(2)
+    time.sleep(randN+15)
     print("-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*")

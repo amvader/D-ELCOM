@@ -2,6 +2,8 @@ import pycom
 from _pybytes import Pybytes
 from _pybytes_config import PybytesConfig
 import myconnect
+from machine import SD
+import os
 
 x='!'
 global conf
@@ -29,6 +31,15 @@ def pconfig(update):
         print("New Conf -> ****");print(conf)
 
 
+def initSD():
+    global sd
+    try:
+        sd = SD()
+        os.mount(sd, '/sd')
+
+    except:
+        sd=False
+        print("SD Problem")
 
 
 """
